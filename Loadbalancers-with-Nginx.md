@@ -12,7 +12,7 @@ sudo apt update -y &&  sudo apt install apache2 -y
 sudo systemctl status apache2
 ![Screenshot from 2023-10-09 22-37-31](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/dde41d57-61e7-4276-ac91-7ea0a71475be)
 
-#### Step 3: Configuring apache to serve a page showing it's IP address.
+#### Step 4: Configuring apache to serve a page showing it's IP address.
 sudo vi /etc/apache2/ports.conf 
 #### Adding a new Listen directive for port 8000.
 ![Screenshot from 2023-10-09 22-50-55](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/52ca9d28-081d-4c44-8fb9-f2a974ba6e66)
@@ -48,6 +48,38 @@ sudo systemctl restart apache2
 ![Screenshot from 2023-10-09 23-54-11](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/95192b63-9e6b-42ba-801f-a7683644769c)
 
 ![Screenshot from 2023-10-09 23-54-44](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/cf4ca0fa-5e68-4da0-9020-d8ecd70d0005)
+
+
+### Step 5: Configuring Nginx as a Load Balancer
+  • Provision a new EC2 instance running ubuntu 22.04. Make sure port 80 is opened to accept traffic from anywhere. Your can refer to step 1 through step 2 to refresh your memory.
+![Screenshot from 2023-10-10 00-41-08](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/246867bf-c1a9-4fa2-836a-06fdae34c53f)
+    • Next SSH into the instance. Again refer to step 3 for a refresher if needed.
+    • Install Nginx into the instance using the command below:
+    sudo apt update -y && sudo apt install nginx -y
+![Screenshot from 2023-10-10 00-44-31](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/47a332dc-3668-4747-b4da-d42b0423eee4)
+    • Verify that Nginx is installed with the command below:
+    sudo systemctl status nginx
+  ![Screenshot from 2023-10-10 00-47-02](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/8f87a23f-06c5-41c7-9959-17a5bac030c5)
+
+  • Open Nginx configuration file with the command below:
+    sudo vi /etc/nginx/conf.d/loadbalancer.conf
+![Screenshot from 2023-10-10 01-18-19](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/12bb6fe3-4622-44eb-a1a9-dcd7913ce001)
+
+  • Test your configuration with the command below:
+    sudo nginx -t
+![Screenshot from 2023-10-10 00-54-13](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/f9eb0a17-af19-4925-8c7d-aae5145d8bb4)
+
+  • Restart Nginx to laod the new configuration with the command below:
+    sudo systemctl restart nginx
+![Screenshot from 2023-10-10 01-00-46](https://github.com/PromiseNwachukwu/Implementing-Loadbalancers-with-Nginx/assets/109115304/278d0081-efbd-42d1-ace4-14815eb3c552)
+
+      
+  • Paste the public IP address of Nginx load balancer, you should see the same webpages served by the webservers.
+  
+
+
+
+
 
 
 
